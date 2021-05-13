@@ -51,14 +51,12 @@ class SocialSigninPage extends Component {
       PermissionsAndroid.check(
         PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
       ).then((writeGranted) => {
-        console.log('writeGranted', writeGranted);
         if (!writeGranted) {
           requestWriteStoragePermission();
         }
         PermissionsAndroid.check(
           PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
         ).then((readGranted) => {
-          console.log('readGranted', readGranted);
           if (!readGranted) {
             requestReadStoragePermission();
           }
@@ -76,7 +74,6 @@ class SocialSigninPage extends Component {
         iosClientId: GOOGLE_API_IOS_CLIENT_ID,
       });
 
-      console.warn('--------');
       await GoogleSignin.hasPlayServices({
         showPlayServicesUpdateDialog: true,
       });
@@ -103,10 +100,8 @@ class SocialSigninPage extends Component {
 
   importDatabase = async () => {
     await this.initialGoogle();
-    console.warn('getFile()');
     getFile()
       .then((fileFromGDrive) => {
-        console.warn(fileFromGDrive);
         if (fileFromGDrive) {
           download(fileFromGDrive.id).then((res) => {
             const {accountSqlQuery, categorySqlQuery, recordSqlQuery} = res;
