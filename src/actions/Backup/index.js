@@ -87,3 +87,29 @@ export const getUserInfo = () => {
     }
   };
 };
+
+export const getLockedState = () => {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: 'lock_fetch_success',
+        payload: {},
+      });
+    } catch (error) {
+      throw error;
+    }
+  };
+};
+
+export const setLockedState = (value) => {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: 'lock_insert_success',
+        payload: value,
+      });
+    } catch (error) {
+      throw error;
+    }
+  };
+};
