@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
-import {connect} from 'react-redux';
+import {connect, useSelector, useDispatch} from 'react-redux';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
@@ -26,6 +26,8 @@ import CategoryPage from './components/CategoryPage';
 import CategoryAdd from './components/CategoryPage/CategoryAdd';
 import CategoryList from './components/CategoryPage/CategoryList';
 // import {Header, Button} from 'react-native-elements';
+
+import {getSettings, setLockedState} from './actions';
 
 import {COLOR_DARK_BLUE} from './styles/common';
 
@@ -260,16 +262,21 @@ const HomeDrawer = ({navigation}) => {
   );
 };
 
-function App({locked}) {
-  const [isAppLocked, setAppLocked] = useState(true);
+function App({locked, shouldLock}) {
+  const shouldAppShowLockScreen = useSelector(
+    (state) => state.setting.preference.lockscreen,
+  );
+  const isAppUnLocked = useSelector((state) => !state.setting.locked);
 
-  useEffect(() => {
-    setAppLocked(!!locked);
-  }, [locked]);
+  const dispatch = useDispatch();
+  const addNote = (note) => dispatch(setLockedState());
+
+  const showLockScreen =
+    shouldAppShowLockScreen === 'true' ? (isAppUnLocked ? false : true) : false;
 
   return (
     <NavigationContainer>
-      {isAppLocked ? <LockScreen /> : <HomeDrawer />}
+      {showLockScreen ? <LockScreen /> : <HomeDrawer />}
     </NavigationContainer>
   );
 }
@@ -277,7 +284,8 @@ function App({locked}) {
 const mapStateToProps = (state) => {
   return {
     locked: state.backup.locked,
+    shouldLock: state.setting.preference.lockscreen,
   };
 };
 
-export default connect(mapStateToProps, null)(App);
+export default connect(mapStateToProps, getSettings)(App);

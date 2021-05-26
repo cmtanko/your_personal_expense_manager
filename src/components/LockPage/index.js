@@ -1,22 +1,31 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {View} from 'react-native';
 import {connect} from 'react-redux';
-import PINCode from '@haskkor/react-native-pincode';
+import PINCode, {hasUserSetPinCode} from '@haskkor/react-native-pincode';
 
 import {setLockedState} from '../../actions';
-import {selectBackups} from '../../selector';
+import {selectBackups, selectSetting} from '../../selector';
 import cs, {COLOR_DARK_LIGHTBLUE} from '../../styles/common';
 
 const LockPage = (props) => {
+  const [status, setStatus] = useState('choose');
+
+  useEffect(() => {
+    hasUserSetPinCode().then((val) => {
+      setStatus(val ? 'enter' : 'choose');
+    });
+  }, []);
+
   return (
     <View style={cs.container}>
       <PINCode
         touchIDDisabled={true}
-        status={'enter'}
+        status={status}
         maxAttempts="100"
         colorCircleButtons={COLOR_DARK_LIGHTBLUE}
         subtitleChoose={'To secure Personal Expense Manager'}
         finishProcess={(a) => {
+          console.warn(a);
           props.setLockedState(false);
         }}
       />
@@ -27,6 +36,7 @@ const LockPage = (props) => {
 const mapStateToProps = (state) => {
   return {
     latestBackup: selectBackups(state),
+    setting: selectSetting(state),
   };
 };
 

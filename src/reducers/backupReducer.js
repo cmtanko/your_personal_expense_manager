@@ -2,7 +2,6 @@ const initialState = {
   list: [],
   error: '',
   loading: false,
-  locked: true,
 };
 
 export default function (state = initialState, action) {
@@ -17,13 +16,7 @@ export default function (state = initialState, action) {
       return {...state};
     }
     case 'database_wipe_success': {
-      return {...state};
-    }
-    case 'lock_insert_success': {
-      return {...state, locked: action.payload};
-    }
-    case 'lock_fetch_success': {
-      return {...state, locked: true};
+      return {...initialState};
     }
     default:
       return state;
