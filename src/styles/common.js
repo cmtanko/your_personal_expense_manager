@@ -11,7 +11,7 @@ export const COLOR_GRAY_DARK2 = '#5b5b5b';
 export const COLOR_LIGHT_YELLOW = '#f5c223';
 export const COLOR_T_BLUE = '#2196f3';
 
-export const COLOR_PRIMARY = '#10151D';
+export const COLOR_PRIMARY = '#0F171E';
 export const COLOR_SECONDARY = '#131D28';
 export const COLOR_TERTIARY = '#22e3c4';
 export const COLOR_SUCCESS = '#1DDC7C';
