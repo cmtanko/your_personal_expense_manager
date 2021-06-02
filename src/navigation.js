@@ -10,6 +10,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Dashboard from './components/Dashboard';
 
 import LockPage from './components/LockPage';
+import IntroPage from './components/IntroPage';
 
 import SettingPage from './components/SettingPage';
 import ReportPage from './components/ReportPage';
@@ -202,6 +203,17 @@ const LockScreen = ({navigation}) => {
   );
 };
 
+const IntroScreen = ({navigation}) => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <Stack.Screen name="LockedScreen" component={IntroPage} />
+    </Stack.Navigator>
+  );
+};
+
 const HomeDrawer = ({navigation}) => {
   return (
     <Drawer.Navigator
@@ -276,7 +288,7 @@ function App({locked, shouldLock}) {
 
   return (
     <NavigationContainer>
-      {showLockScreen ? <LockScreen /> : <HomeDrawer />}
+      {showLockScreen ? <LockScreen /> : <IntroScreen />}
     </NavigationContainer>
   );
 }
