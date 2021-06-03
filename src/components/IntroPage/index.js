@@ -1,43 +1,59 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {connect} from 'react-redux';
 import AppIntro from 'rn-app-intro-screen';
+import styles from './styles';
 
-const styles = StyleSheet.create({
-  image: {
-    width: 320,
-    height: 320,
-  },
-});
+import {setIntroState} from '../../actions';
 
 const slides = [
   {
     key: 'somethun',
-    title: 'Title 1',
-    text: 'Description.\nSay something cool',
-    image: require('../../assets/images/2.jpg'),
+    title: 'Track Your Spending',
+    textStyle: {color: '#22e3c4'},
+    text: 'It helps you to track\n your expenses quickly and easily.',
+    image: require('../../assets/images/intro1.png'),
     imageStyle: styles.image,
-    backgroundColor: '#59b2ab',
+    backgroundColor: '#131D28',
   },
   {
     key: 'somethun-dos',
-    title: 'Title 2',
-    text: 'Other cool stuff',
-    image: require('../../assets/images/3.jpg'),
+    title: 'Plan Your Budget',
+    text:
+      'Easy and user friendly \nPersonal Finance App to take control of your money',
+    image: require('../../assets/images/intro2.png'),
     imageStyle: styles.image,
-    backgroundColor: '#febe29',
+    textStyle: {color: '#22e3c4'},
+    backgroundColor: '#131D28',
   },
   {
     key: 'somethun1',
-    title: 'Rocket guy',
-    text: "I'm already out of descriptions\n\nLorem ipsum bla bla bla",
-    image: require('../../assets/images/1.jpg'),
+    title: 'Get Your Monthly Report',
+    text: 'Overview your past and current spending progress by category',
+    image: require('../../assets/images/intro3.png'),
     imageStyle: styles.image,
-    backgroundColor: '#22bcb5',
+    textStyle: {color: '#22e3c4'},
+    backgroundColor: '#131D28',
   },
 ];
 
-export default class App extends React.Component {
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
-    return <AppIntro slides={slides} onDone={this._onDone} />;
+    return (
+      <AppIntro
+        dotStyle={{backgroundColor: '#8888aa'}}
+        textStyle={{color: 'red', backgroundColor: 'green'}}
+        activeDotStyle={{backgroundColor: '#22e3c4'}}
+        slides={slides}
+        onDone={() => this.props.setIntroState(false)}
+      />
+    );
   }
 }
+
+export default connect(null, {
+  setIntroState,
+})(App);

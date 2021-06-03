@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useEffect} from 'react';
 import {connect, useSelector, useDispatch} from 'react-redux';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
@@ -26,9 +26,8 @@ import AccountList from './components/AccountPage/AccountList';
 import CategoryPage from './components/CategoryPage';
 import CategoryAdd from './components/CategoryPage/CategoryAdd';
 import CategoryList from './components/CategoryPage/CategoryList';
-// import {Header, Button} from 'react-native-elements';
 
-import {getSettings, setLockedState} from './actions';
+import {getSettings, getRecords, setLockedState} from './actions';
 
 import {COLOR_PRIMARY} from './styles/common';
 
@@ -274,21 +273,36 @@ const HomeDrawer = ({navigation}) => {
   );
 };
 
-function App({locked, shouldLock}) {
+function App(props, {locked, shouldLock}) {
   const shouldAppShowLockScreen = useSelector(
     (state) => state.setting.preference.lockscreen,
   );
+
+  useEffect(() => {
+    props.getSettings();
+    props.getRecords();
+  }, []);
+
   const isAppUnLocked = useSelector((state) => !state.setting.locked);
+  const isAppPreviouslyUsed = useSelector(
+    (state) => state.record.list.length > 0,
+  );
 
   const dispatch = useDispatch();
-  const addNote = (note) => dispatch(setLockedState());
+  dispatch(setLockedState());
 
   const showLockScreen =
     shouldAppShowLockScreen === 'true' ? (isAppUnLocked ? false : true) : false;
 
   return (
     <NavigationContainer>
-      {showLockScreen ? <LockScreen /> : <IntroScreen />}
+      {showLockScreen ? (
+        <LockScreen />
+      ) : isAppPreviouslyUsed || !props.introShow ? (
+        <HomeDrawer />
+      ) : (
+        <IntroScreen />
+      )}
     </NavigationContainer>
   );
 }
@@ -297,7 +311,9 @@ const mapStateToProps = (state) => {
   return {
     locked: state.backup.locked,
     shouldLock: state.setting.preference.lockscreen,
+    record: state.record,
+    introShow: state.intro.show,
   };
 };
 
-export default connect(mapStateToProps, getSettings)(App);
+export default connect(mapStateToProps, {getSettings, getRecords})(App);
