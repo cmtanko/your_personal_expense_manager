@@ -290,7 +290,7 @@ function App(props, {locked, shouldLock}) {
   );
 
   const dispatch = useDispatch();
-  dispatch(setLockedState());
+  const uploadLockedState = (note) => dispatch(setLockedState());
 
   const showLockScreen =
     shouldAppShowLockScreen === 'true' ? (isAppUnLocked ? false : true) : false;
