@@ -143,7 +143,7 @@ class RecordAddIncome extends Component {
       } else {
         this.props.addRecord({
           amount,
-          date: date.toISOString(),
+          date: new Date(date).toISOString(),
           categoryId,
           payFrom,
           payTo,

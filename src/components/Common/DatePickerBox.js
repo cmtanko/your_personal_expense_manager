@@ -29,7 +29,6 @@ const DatePickerBox = ({title, value, onChange}) => {
           mode="date"
           showIcon={false}
           placeholder="select date"
-          format="DD-MM-YYYY"
           confirmBtnText="Confirm"
           cancelBtnText="Cancel"
           customStyles={{
