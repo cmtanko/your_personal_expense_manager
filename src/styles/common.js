@@ -263,4 +263,8 @@ export default StyleSheet.create({
   padding_large: {
     paddingTop: 8,
   },
+
+  spacer: {
+    paddingTop: 8,
+  },
 });
