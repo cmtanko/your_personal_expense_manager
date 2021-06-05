@@ -35,6 +35,7 @@ export const InputContainer = styled(Input)`
   width: 92%;
   height: ${(props) => props.theme.sizes[2]};
   border-radius: 2;
+  padding-left: 16;
 `;
 
 export const PickerContainer = styled(Picker)`
