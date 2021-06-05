@@ -43,5 +43,5 @@ export const PickerContainer = styled(Picker)`
   background-color: ${(props) => props.theme.colors.bg.primary};
   border-radius: 2;
   width: ${WIDTH * 0.82};
-  height: ${(props) => props.theme.sizes[3]};
+  height: ${(props) => 42};
 `;
