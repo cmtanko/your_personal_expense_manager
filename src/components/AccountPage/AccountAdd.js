@@ -3,7 +3,14 @@ import React, {Component} from 'react';
 import {Content, View, Form} from 'native-base';
 
 import icons from '../../iconList';
-import {InputBox, ButtonBox, ErrorBox, PickerBox, IconBox} from '../Common';
+import {
+  InputBox,
+  ButtonBox,
+  ErrorBox,
+  PickerBox,
+  IconBox,
+  IconModalBox,
+} from '../Common';
 import {addAccount, editAccount, deleteAccount} from '../../actions';
 
 import {AccountAddContainer, AccountForm} from './index.styles';
@@ -33,12 +40,6 @@ class AccountAdd extends Component {
     const {params} = this.props.route;
 
     if (params) {
-      const {navigateBackTo} = params;
-      if (navigateBackTo) {
-        callback = () => this.props.navigation.navigate(navigateBackTo);
-        return;
-      }
-
       const {account} = params;
       const {id, icon, type, title, balance, openingBalance} = account;
 
@@ -147,8 +148,10 @@ class AccountAdd extends Component {
                 onChange={(value) => this.onStateChange('type', value)}
               />
 
-              <IconBox
-                title="Icon"
+              <IconModalBox
+                headingIcon="ios-globe"
+                headingTitle="Icon"
+                title="Select Icon"
                 icons={icons}
                 icon={icon}
                 onChange={(value) => this.onStateChange('icon', value)}
