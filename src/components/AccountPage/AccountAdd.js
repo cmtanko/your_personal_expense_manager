@@ -8,7 +8,6 @@ import {
   ButtonBox,
   ErrorBox,
   PickerBox,
-  IconBox,
   IconModalBox,
 } from '../Common';
 import {addAccount, editAccount, deleteAccount} from '../../actions';
