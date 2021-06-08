@@ -34,7 +34,7 @@ export const InputContainer = styled(Input)`
   color: ${(props) => props.theme.colors.text.primary};
   background-color: ${(props) => props.theme.colors.bg.primary};
   width: 92%;
-  height: ${(props) => props.theme.sizes[2]};
+  height: ${(props) => props.theme.sizes[3]};
   border-radius: 2;
   padding-left: 16;
 `;
