@@ -8,7 +8,7 @@ console.warn(WIDTH);
 
 export const InputGroupContainer = styled(InputGroup)`
   border-bottom-width: 0;
-  padding-bottom: ${(props) => props.theme.space[2]};
+  padding-bottom: ${(props) => props.theme.space[0]};
 `;
 
 export const IconContainer = styled(Icon)`

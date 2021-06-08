@@ -68,7 +68,7 @@ class RecordAddIncome extends Component {
         description,
         payTo,
         place,
-        camera: attachment,
+        attachment,
       } = params.record;
       this.setState({
         id,
