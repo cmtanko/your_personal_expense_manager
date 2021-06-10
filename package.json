@@ -68,6 +68,7 @@
     "react-native-google-drive-api-wrapper": "^1.4.0",
     "react-native-image-picker": "^3.3.2",
     "react-native-keychain": "^7.0.0",
+    "react-native-modalbox": "^2.0.2",
     "react-native-paper": "^4.4.1",
     "react-native-reanimated": "^1.13.2",
     "react-native-safe-area-context": "^3.1.9",
