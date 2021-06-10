@@ -157,6 +157,7 @@ class AccountAdd extends Component {
                   alignSelf: 'center',
                   height: '64%',
                   borderRadius: 20,
+                  width: '80%',
                 }}>
                 <FlatList
                   ListHeaderComponent={() => (
