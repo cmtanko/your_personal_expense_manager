@@ -3,7 +3,7 @@
   "version": "1.0.2",
   "private": true,
   "scripts": {
-    "bundle:ios": "react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest ios",
+    "bundle:ios": "react-native bundle  --minify --entry-file index.js --platform ios --dev false --bundle-output ./ios/main.jsbundle --assets-dest ./ios/",
     "pod-update": "cd ios && pod install && cd ..",
     "install-deps-android": "cd android && bundle update && bundle install",
     "install-deps-ios": "cd ios && pod update && pod install && bundle update && bundle install",
