@@ -102,6 +102,52 @@ export default StyleSheet.create({
     fontSize: 12,
   },
 
+  h5: {
+    fontSize: 10,
+  },
+
+  h6: {
+    fontSize: 8,
+  },
+
+  pt8: {
+    paddingTop: 8,
+  },
+
+  pb8: {
+    paddingBottom: 8,
+  },
+  // text
+
+  overview_heading: {
+    color: '#ffffff',
+    fontSize: 35,
+    fontWeight: '700',
+    textAlign: 'center',
+  },
+
+  overview_title: {
+    color: '#ffffff',
+    fontWeight: '700',
+    fontSize: 14,
+  },
+
+  overview_subtitle: {
+    color: '#ffffff',
+    fontSize: 12,
+    textAlign: 'center',
+  },
+
+  round_box_container: {
+    backgroundColor: '#1A283B',
+    height: 72,
+    width: 142,
+    borderRadius: 16,
+    marginRight: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
   center: {
     textAlign: 'center',
   },
@@ -150,6 +196,35 @@ export default StyleSheet.create({
     fontSize: 35,
     alignSelf: 'center',
     color: 'gray',
+  },
+
+  left_icon: {
+    fontSize: 28,
+    padding: 8,
+    color: '#22e3c4',
+  },
+
+  round_icon: {
+    color: '#22e3c4',
+    paddingTop: 12,
+    fontSize: 24,
+  },
+
+  round_icon_title: {
+    fontSize: 10,
+    color: '#ffffff',
+    top: 16,
+  },
+
+  round_icon_container: {
+    height: 48,
+    width: 48,
+    borderRadius: 48,
+    borderColor: '#243855',
+    borderWidth: 2,
+    marginRight: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   // Label
@@ -272,5 +347,16 @@ export default StyleSheet.create({
 
   borderZero: {
     borderBottomWidth: 0,
+  },
+
+  // Section
+
+  section_bottom: {
+    flex: 1,
+    backgroundColor: '#121924',
+    paddingLeft: 16,
+    paddingRight: 16,
+    marginTop: -48,
+    zIndex: -9999,
   },
 });

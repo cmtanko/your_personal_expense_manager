@@ -15,6 +15,7 @@ import IntroPage from './components/IntroPage';
 import SettingPage from './components/SettingPage';
 import ReportPage from './components/ReportPage';
 
+import OverviewPage from './components/Dashboard/Overview';
 import RecordAddExpense from './components/Dashboard/RecordAddExpense';
 import RecordAddIncome from './components/Dashboard/RecordAddIncome';
 import RecordAddTransfer from './components/Dashboard/RecordAddTransfer';
@@ -46,6 +47,80 @@ const HomeStack = ({navigation}) => {
           fontWeight: 'bold',
         },
       }}>
+      <Stack.Screen
+        name="Home"
+        component={Dashboard}
+        options={{
+          headerLeft: ({color, size}) => (
+            <MaterialCommunityIcons
+              name="menu"
+              color="#fff"
+              size={23}
+              style={{paddingLeft: 8}}
+              onPress={() => navigation.openDrawer()}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        options={{title: 'Add Record'}}
+        name="RecordAddIncome"
+        component={RecordAddIncome}
+      />
+      <Stack.Screen
+        options={{title: 'Add Expense'}}
+        name="RecordAddExpense"
+        component={RecordAddExpense}
+      />
+      <Stack.Screen
+        options={{title: 'Transfer'}}
+        name="RecordAddTransfer"
+        component={RecordAddTransfer}
+      />
+      <Stack.Screen
+        options={{title: 'Add Category'}}
+        name="CategoryAdd"
+        component={CategoryAdd}
+      />
+      <Stack.Screen
+        options={{title: 'Add Account'}}
+        name="AccountAdd"
+        component={AccountAdd}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const OverviewStack = ({navigation}) => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerTitle: 'Overview',
+        headerShown: false,
+        headerStyle: {
+          backgroundColor: COLOR_PRIMARY,
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}>
+      <Stack.Screen
+        name="Overview"
+        options={{
+          title: 'Add Account',
+          headerLeft: ({color, size}) => (
+            <MaterialCommunityIcons
+              name="menu"
+              color="#fff"
+              size={23}
+              style={{paddingLeft: 8}}
+              onPress={() => navigation.openDrawer()}
+            />
+          ),
+        }}
+        component={OverviewPage}
+      />
       <Stack.Screen
         name="Home"
         component={Dashboard}
@@ -256,10 +331,20 @@ const IntroScreen = ({navigation}) => {
 const HomeDrawer = ({navigation}) => {
   return (
     <Drawer.Navigator
-      initialRouteName="Home"
+      initialRouteName="Overview"
       overlayColor="transparent"
       drawerType="slide"
       drawerStyle={{width: '56%'}}>
+      <Drawer.Screen
+        name="Overview"
+        component={OverviewStack}
+        options={{
+          headerShown: false,
+          drawerIcon: ({color, size}) => (
+            <MaterialCommunityIcons name="home" color={color} size={size} />
+          ),
+        }}
+      />
       <Drawer.Screen
         name="Home"
         component={HomeStack}

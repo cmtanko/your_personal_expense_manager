@@ -41,7 +41,7 @@ const RecordTransactionSummary = ({
     <View style={{}}>
       <View style={cs.summary_header}>
         <Text
-          style={[cs.h2, {color: type === 'INCOME' ? '#412C4C' : '#264D30'}]}>
+          style={[cs.h2, {color: type === 'INCOME' ? '#8658A5' : '#47985D'}]}>
           {type}
         </Text>
       </View>
@@ -51,7 +51,9 @@ const RecordTransactionSummary = ({
           flexDirection: 'row',
           alignSelf: 'flex-start',
         }}>
-        <View style={{flex: 2}}>
+        <View style={{flex: 1}}></View>
+
+        <View style={{flex: 6}}>
           <VictoryPie
             colorScale={[
               '#195B39',
@@ -66,12 +68,12 @@ const RecordTransactionSummary = ({
             data={categoryWiseRecords}
             theme={VictoryTheme.material}
             innerRadius={50}
-            width={250}
+            width={248}
             events={[]}
             style={{
               labels: {
                 fill: '#dddddd',
-                fontSize: 12,
+                fontSize: 8,
               },
             }}
             animate={{
@@ -81,7 +83,7 @@ const RecordTransactionSummary = ({
         </View>
         <View
           style={{
-            flex: 1,
+            flex: 5,
             paddingTop: 64,
             justifyContent: 'center',
           }}>
@@ -92,7 +94,7 @@ const RecordTransactionSummary = ({
             orientation="vertical"
             gutter={20}
             style={{
-              labels: {fill: 'white', fontSize: 14},
+              labels: {fill: 'white', fontSize: 10},
             }}
             colorScale={[
               '#195B39',

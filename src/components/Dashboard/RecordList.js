@@ -89,7 +89,7 @@ class RecordList extends PureComponent {
               borderTopRightRadius: 24,
               borderTopLeftRadius: 24,
               borderTopColor:
-                this.state.selectedType === 'INCOME' ? '#412C4C' : '#264D30',
+                this.state.selectedType === 'INCOME' ? '#8658A5' : '#47985D',
               borderTopWidth: 5,
             },
           ]}
@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
   },
 
   modal4: {
-    height: '48%',
+    height: '64%',
   },
 
   btn: {
