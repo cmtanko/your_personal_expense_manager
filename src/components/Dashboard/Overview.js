@@ -1,13 +1,35 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import {connect} from 'react-redux';
 import {StyleSheet, ScrollView, Text, View} from 'react-native';
 import {Button, Title, List} from 'react-native-paper';
 import {Container, Content, Icon, Header, Left, Body, Right} from 'native-base';
 
+import {selectRecords, selectCategories, selectAccounts} from '../../selector';
+import {
+  getRecords,
+  getAccounts,
+  getCategories,
+  getBackup,
+  getUserInfo,
+  getSettings,
+} from '../../actions';
 import cs from '../../styles/common';
 
 import {RoundIcon, RoundBoxButton} from '../Common';
 
 const Overview = (props) => {
+  useEffect(() => {
+    props.getRecords();
+    props.getAccounts();
+    props.getCategories();
+  }, []);
+
+  const accounts = props.accounts;
+  const totalAmountInAccount = props.accounts.reduce(
+    (accumulator, currentValue) =>
+      accumulator + parseFloat(currentValue.openingBalance),
+    0,
+  );
   return (
     <Container style={[cs.brandBgColorSecondary]}>
       <View id="topSection" style={cs.pb8}>
@@ -27,7 +49,12 @@ const Overview = (props) => {
         </Header>
 
         <View style={[cs.center, {height: 96}]}>
-          <Text style={cs.overview_heading}>$ 32,400</Text>
+          <Text style={cs.overview_heading}>
+            ${' '}
+            {totalAmountInAccount.toLocaleString(undefined, {
+              minimumFractionDigits: 0,
+            })}
+          </Text>
           <Text style={cs.overview_subtitle}>In Total</Text>
         </View>
 
@@ -36,11 +63,25 @@ const Overview = (props) => {
             showsHorizontalScrollIndicator={false}
             horizontal={true}
             style={{}}>
-            <RoundBoxButton title="Add Account" subtitle="+" />
-            <RoundBoxButton title="Bank of Melbourne" subtitle="$12,000" />
-            <RoundBoxButton title="CommonWealth Bank" subtitle="$2,100" />
-            <RoundBoxButton title="Cash" subtitle="$120" />
-            <RoundBoxButton title="Credit Card" subtitle="- $120" />
+            <RoundBoxButton
+              title="Add Account"
+              subtitle="+"
+              onPress={() => {}}
+            />
+            {props.accounts.map((account) => {
+              const {title, openingBalance} = account;
+              return (
+                <RoundBoxButton
+                  title={title}
+                  subtitle={parseFloat(openingBalance).toLocaleString(
+                    undefined,
+                    {
+                      minimumFractionDigits: 0,
+                    },
+                  )}
+                />
+              );
+            })}
           </ScrollView>
         </View>
       </View>
@@ -53,11 +94,10 @@ const Overview = (props) => {
               showsHorizontalScrollIndicator={false}
               horizontal={true}>
               <RoundIcon title="Add" name="plus" />
-              <RoundIcon title="Building" name="cog" />
-              <RoundIcon title="Saving" name="bank" />
-              <RoundIcon title="Add" name="plus" />
-              <RoundIcon title="Building" name="cog" />
-              <RoundIcon title="Saving" name="bank" />
+              {props.categories.map((category) => {
+                const {title, icon} = category;
+                return <RoundIcon title={title} name={icon} />;
+              })}
             </ScrollView>
           </View>
         </View>
@@ -65,23 +105,41 @@ const Overview = (props) => {
         <View
           style={{
             flex: 1,
-            paddingTop: 16,
+            paddingTop: 0,
           }}>
           <Text style={cs.overview_title}>Today's Transaction</Text>
           <Content>
             <List.Section>
-              <List.Item
-                titleStyle={[cs.color_white]}
-                descriptionStyle={[cs.color_white]}
-                left={() => (
-                  <Icon type="FontAwesome" name="money" style={cs.left_icon} />
-                )}
-                right={(props) => (
-                  <Text style={[cs.h3, cs.color_white]}>$180</Text>
-                )}
-                title="Grocery"
-                description="Coles"
-              />
+              {props.records.map((record) => {
+                const {description, categoryId, id, amount} = record;
+                const category = props.categories.filter(
+                  (cat) => cat.id === categoryId,
+                );
+                if (category.length === 0) {
+                  return;
+                }
+                return (
+                  <List.Item
+                    key={id}
+                    titleStyle={[cs.color_white, cs.h3, {fontWeight: '700'}]}
+                    descriptionStyle={[cs.color_white]}
+                    left={() => (
+                      <Icon
+                        type="FontAwesome"
+                        name={category[0].icon}
+                        style={[cs.left_icon]}
+                      />
+                    )}
+                    right={(props) => (
+                      <Text style={[cs.h3, cs.color_white]}>
+                        {category[0].type === 'INCOME' ? '+' : '-'} ${amount}
+                      </Text>
+                    )}
+                    title={category[0].title}
+                    description={description}
+                  />
+                );
+              })}
             </List.Section>
           </Content>
         </View>
@@ -90,6 +148,20 @@ const Overview = (props) => {
   );
 };
 
-export default Overview;
+const mapStateToProps = (state) => {
+  return {
+    records: selectRecords(state),
+    accounts: selectAccounts(state),
+    categories: selectCategories(state),
+    settings: state.settings,
+  };
+};
 
-const styles = StyleSheet.create({});
+export default connect(mapStateToProps, {
+  getBackup,
+  getUserInfo,
+  getRecords,
+  getSettings,
+  getAccounts,
+  getCategories,
+})(Overview);

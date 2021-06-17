@@ -199,9 +199,10 @@ export default StyleSheet.create({
   },
 
   left_icon: {
-    fontSize: 28,
+    fontSize: 24,
     padding: 8,
     color: '#22e3c4',
+    width: 48,
   },
 
   round_icon: {

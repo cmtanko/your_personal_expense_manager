@@ -346,11 +346,11 @@ const HomeDrawer = ({navigation}) => {
         }}
       />
       <Drawer.Screen
-        name="Home"
+        name="Transactions"
         component={HomeStack}
         options={{
           drawerIcon: ({color, size}) => (
-            <MaterialCommunityIcons name="home" color={color} size={size} />
+            <MaterialCommunityIcons name="signal" color={color} size={size} />
           ),
         }}
       />
