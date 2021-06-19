@@ -139,9 +139,20 @@ const OverviewStack = ({navigation}) => {
         component={RecordAddTransfer}
       />
       <Stack.Screen
+        options={{title: 'Categories'}}
+        name="Category"
+        component={CategoryPage}
+      />
+
+      <Stack.Screen
         options={{title: 'Add Category'}}
         name="CategoryAdd"
         component={CategoryAdd}
+      />
+      <Stack.Screen
+        options={{title: 'Accounts'}}
+        name="Account"
+        component={AccountPage}
       />
       <Stack.Screen
         options={{title: 'Add Account'}}

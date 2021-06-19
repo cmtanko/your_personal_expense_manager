@@ -74,7 +74,7 @@ const Overview = (props) => {
               subtitle="+"
               id={0}
               onPress={() => {
-                props.navigation.navigate('AccountAdd');
+                props.navigation.navigate('Account');
               }}
             />
             {props.accounts.map((account) => {
@@ -112,7 +112,7 @@ const Overview = (props) => {
                 id={0}
                 name="plus"
                 onPress={() => {
-                  props.navigation.navigate('CategoryAdd');
+                  props.navigation.navigate('Category');
                 }}
               />
               {props.categories.map((category) => {
