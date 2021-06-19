@@ -148,6 +148,16 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
 
+  round_box_container_active: {
+    backgroundColor: '#DD0D1F',
+    height: 72,
+    width: 142,
+    borderRadius: 16,
+    marginRight: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
   center: {
     textAlign: 'center',
   },
@@ -200,9 +210,8 @@ export default StyleSheet.create({
 
   left_icon: {
     fontSize: 24,
-    padding: 8,
     color: '#22e3c4',
-    width: 48,
+    width: 36,
   },
 
   round_icon: {
@@ -226,6 +235,18 @@ export default StyleSheet.create({
     marginRight: 24,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+
+  round_icon_container_active: {
+    height: 48,
+    width: 48,
+    borderRadius: 48,
+    borderColor: '#DD0D1F',
+    borderWidth: 2,
+    marginRight: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#DD0D1F',
   },
 
   // Label

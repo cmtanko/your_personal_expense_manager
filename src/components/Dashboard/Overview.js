@@ -3,8 +3,14 @@ import {connect} from 'react-redux';
 import {StyleSheet, ScrollView, Text, View} from 'react-native';
 import {Button, Title, List} from 'react-native-paper';
 import {Container, Content, Icon, Header, Left, Body, Right} from 'native-base';
+import {selectAccountType, selectAccount, selectCategory} from '../../actions';
 
-import {selectRecords, selectCategories, selectAccounts} from '../../selector';
+import {
+  selectRecords,
+  selectCategories,
+  selectAccounts,
+  selectTransactions,
+} from '../../selector';
 import {
   getRecords,
   getAccounts,
@@ -66,12 +72,17 @@ const Overview = (props) => {
             <RoundBoxButton
               title="Add Account"
               subtitle="+"
-              onPress={() => {}}
+              id={0}
+              onPress={() => {
+                props.navigation.navigate('AccountAdd');
+              }}
             />
             {props.accounts.map((account) => {
-              const {title, openingBalance} = account;
+              const {title, id, openingBalance} = account;
               return (
                 <RoundBoxButton
+                  id={id}
+                  selectedItem={props?.selectedItem?.account}
                   title={title}
                   subtitle={parseFloat(openingBalance).toLocaleString(
                     undefined,
@@ -79,6 +90,9 @@ const Overview = (props) => {
                       minimumFractionDigits: 0,
                     },
                   )}
+                  onPress={() => {
+                    props.selectAccount(id);
+                  }}
                 />
               );
             })}
@@ -93,10 +107,27 @@ const Overview = (props) => {
             <ScrollView
               showsHorizontalScrollIndicator={false}
               horizontal={true}>
-              <RoundIcon title="Add" name="plus" />
+              <RoundIcon
+                title="Add"
+                id={0}
+                name="plus"
+                onPress={() => {
+                  props.navigation.navigate('CategoryAdd');
+                }}
+              />
               {props.categories.map((category) => {
-                const {title, icon} = category;
-                return <RoundIcon title={title} name={icon} />;
+                const {title, icon, id} = category;
+                return (
+                  <RoundIcon
+                    selectedItem={props?.selectedItem?.category}
+                    id={id}
+                    title={title}
+                    name={icon}
+                    onPress={() => {
+                      props.selectCategory(id);
+                    }}
+                  />
+                );
               })}
             </ScrollView>
           </View>
@@ -107,39 +138,75 @@ const Overview = (props) => {
             flex: 1,
             paddingTop: 0,
           }}>
-          <Text style={cs.overview_title}>Today's Transaction</Text>
+          <View style={{flexDirection: 'row', height: 24}}>
+            <Text style={[cs.overview_title, {flex: 3}]}>
+              Today's Transaction
+            </Text>
+            <Text
+              style={{
+                flex: 1,
+                paddingRight: 8,
+                textAlign: 'right',
+                color: 'white',
+                fontWeight: '700',
+              }}
+              onPress={() => {
+                props.navigation.navigate('Home');
+              }}>
+              View All
+            </Text>
+          </View>
           <Content>
             <List.Section>
-              {props.records.map((record) => {
-                const {description, categoryId, id, amount} = record;
-                const category = props.categories.filter(
-                  (cat) => cat.id === categoryId,
-                );
-                if (category.length === 0) {
-                  return;
-                }
-                return (
-                  <List.Item
-                    key={id}
-                    titleStyle={[cs.color_white, cs.h3, {fontWeight: '700'}]}
-                    descriptionStyle={[cs.color_white]}
-                    left={() => (
-                      <Icon
-                        type="FontAwesome"
-                        name={category[0].icon}
-                        style={[cs.left_icon]}
-                      />
-                    )}
-                    right={(props) => (
-                      <Text style={[cs.h3, cs.color_white]}>
-                        {category[0].type === 'INCOME' ? '+' : '-'} ${amount}
-                      </Text>
-                    )}
-                    title={category[0].title}
-                    description={description}
-                  />
-                );
-              })}
+              {props.transactions
+                .filter((t) =>
+                  props.selectedItem.category
+                    ? t.categoryId === props.selectedItem.category
+                    : true,
+                )
+                .filter((t) =>
+                  props.selectedItem.account
+                    ? t.payFrom === props.selectedItem.account ||
+                      t.payTo === props.selectedItem.account
+                    : true,
+                )
+                .map((record) => {
+                  console.warn(record);
+                  const {
+                    id,
+                    payTo,
+                    amount,
+                    payFrom,
+                    category,
+                    description,
+                  } = record;
+                  if (!category) return;
+                  return (
+                    <List.Item
+                      key={id}
+                      titleStyle={[
+                        cs.color_white,
+                        cs.h3,
+                        {fontWeight: '700', marginTop: -8},
+                      ]}
+                      descriptionStyle={[cs.color_white]}
+                      left={() => (
+                        <Icon
+                          type="FontAwesome"
+                          name={category.icon}
+                          style={[cs.left_icon]}
+                        />
+                      )}
+                      right={(props) => (
+                        <Text style={[cs.h3, cs.color_white]}>
+                          {category.type === 'INCOME' ? '+' : '-'} ${amount}
+                        </Text>
+                      )}
+                      title={category.title}
+                      description={description}
+                    />
+                  );
+                })}
             </List.Section>
           </Content>
         </View>
@@ -153,7 +220,9 @@ const mapStateToProps = (state) => {
     records: selectRecords(state),
     accounts: selectAccounts(state),
     categories: selectCategories(state),
+    transactions: selectTransactions(state),
     settings: state.settings,
+    selectedItem: state.selectedItem,
   };
 };
 
@@ -164,4 +233,7 @@ export default connect(mapStateToProps, {
   getSettings,
   getAccounts,
   getCategories,
+  selectAccountType,
+  selectAccount,
+  selectCategory,
 })(Overview);

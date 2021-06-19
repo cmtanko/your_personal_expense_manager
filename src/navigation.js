@@ -95,20 +95,17 @@ const OverviewStack = ({navigation}) => {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerTitle: 'Overview',
-        headerShown: false,
+        initialRouteName: 'Home',
         headerStyle: {
           backgroundColor: COLOR_PRIMARY,
         },
         headerTintColor: '#fff',
-        headerTitleStyle: {
-          fontWeight: 'bold',
-        },
       }}>
       <Stack.Screen
         name="Overview"
         options={{
-          title: 'Add Account',
+          headerShown: false,
+          title: 'Overview',
           headerLeft: ({color, size}) => (
             <MaterialCommunityIcons
               name="menu"
@@ -122,19 +119,9 @@ const OverviewStack = ({navigation}) => {
         component={OverviewPage}
       />
       <Stack.Screen
+        options={{title: 'Transactions'}}
         name="Home"
         component={Dashboard}
-        options={{
-          headerLeft: ({color, size}) => (
-            <MaterialCommunityIcons
-              name="menu"
-              color="#fff"
-              size={23}
-              style={{paddingLeft: 8}}
-              onPress={() => navigation.openDrawer()}
-            />
-          ),
-        }}
       />
       <Stack.Screen
         options={{title: 'Add Record'}}
