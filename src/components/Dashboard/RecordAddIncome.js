@@ -56,7 +56,6 @@ class RecordAddIncome extends Component {
 
   componentDidMount() {
     const {params} = this.props.route;
-
     if (params) {
       const {
         id,
@@ -208,8 +207,6 @@ class RecordAddIncome extends Component {
               ]}
               payFrom={this.state.payFrom}
               payTo={this.state.payTo}
-              accountFrom={this.state.accountFrom}
-              accountTo={this.state.accountTo}
               attachment={this.state.attachment}
               categories={[
                 ...categories,
