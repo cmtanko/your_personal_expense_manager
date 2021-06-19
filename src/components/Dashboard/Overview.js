@@ -180,9 +180,7 @@ const Overview = (props) => {
             paddingTop: 0,
           }}>
           <View style={{flexDirection: 'row', height: 24}}>
-            <Text style={[cs.overview_title, {flex: 3}]}>
-              Today's Transaction
-            </Text>
+            <Text style={[cs.overview_title, {flex: 3}]}>Transactions</Text>
             <Text
               style={{
                 flex: 1,
@@ -194,7 +192,7 @@ const Overview = (props) => {
               onPress={() => {
                 props.navigation.navigate('Home');
               }}>
-              View All
+              + ADD
             </Text>
           </View>
           <Content>
@@ -254,6 +252,7 @@ const Overview = (props) => {
                       description={description}
                       onPress={() => {
                         props.navigation.navigate('RecordAddIncome', {
+                          navigateBackTo: 'Overview',
                           record: {
                             ...record,
                             type: category.type,

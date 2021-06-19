@@ -56,7 +56,17 @@ class RecordAddIncome extends Component {
 
   componentDidMount() {
     const {params} = this.props.route;
+
     if (params) {
+      const {navigateBackTo} = params;
+
+      const isOpenedFromOverviewWindowShortCut = !!navigateBackTo;
+      if (isOpenedFromOverviewWindowShortCut) {
+        callback = (acc) => {
+          this.props.navigation.navigate(navigateBackTo);
+        };
+      }
+
       const {
         id,
         amount,
