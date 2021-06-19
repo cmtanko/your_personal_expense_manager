@@ -171,7 +171,6 @@ const Overview = (props) => {
                     : true,
                 )
                 .map((record) => {
-                  console.warn(record);
                   const {
                     id,
                     payTo,
