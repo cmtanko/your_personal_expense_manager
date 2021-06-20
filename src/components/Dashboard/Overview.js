@@ -84,18 +84,31 @@ const Overview = (props) => {
     <Container style={[cs.brandBgColorSecondary]}>
       <View id="topSection" style={cs.pb8}>
         <Header transparent>
-          <Left>
+          <Left style={{flex: 1}}>
             <Button
               transparent
               style={{marginLeft: -16}}
               onPress={() => props.navigation.openDrawer()}>
-              <Icon name="menu" style={cs.color_white} />
+              <Icon name="menu" style={[cs.color_white, {fontSize: 24}]} />
             </Button>
           </Left>
-          <Body>
-            <Title style={cs.overview_subtitle}>Your Balance</Title>
+          <Body
+            style={{
+              flex: 4,
+              alignItems: 'center',
+            }}>
+            <Title style={cs.header_title}>Your Balance</Title>
           </Body>
-          <Right />
+          <Right style={{flex: 1}}>
+            <Icon
+              name="cog"
+              type="FontAwesome"
+              onPress={() => {
+                props.navigation.navigate('Setting', {hideProfile: true});
+              }}
+              style={[cs.color_white, {fontSize: 24}]}
+            />
+          </Right>
         </Header>
 
         <View style={[cs.center, {height: 96}]}>
@@ -259,11 +272,11 @@ const Overview = (props) => {
                       right={(props) => (
                         <Text style={[cs.h3, cs.color_white]}>
                           {category.type === 'INCOME'
-                            ? '+'
+                            ? '+ '
                             : category.type === 'EXPENSE'
-                            ? '-'
+                            ? '- '
                             : ''}
-                          ${amount}
+                          ${currencify(amount)}
                         </Text>
                       )}
                       title={category.title}
