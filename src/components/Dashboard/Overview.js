@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import {StyleSheet, ScrollView, Text, View} from 'react-native';
-import {Button, Title, List} from 'react-native-paper';
+import {Button, Title, List, Chip} from 'react-native-paper';
 import {Container, Content, Icon, Header, Left, Body, Right} from 'native-base';
 import {selectAccountType, selectAccount, selectCategory} from '../../actions';
 
@@ -179,21 +179,39 @@ const Overview = (props) => {
             flex: 1,
             paddingTop: 0,
           }}>
-          <View style={{flexDirection: 'row', height: 24}}>
+          <View style={{flexDirection: 'row', height: 32}}>
             <Text style={[cs.overview_title, {flex: 3}]}>Transactions</Text>
-            <Text
+            <Chip
+              icon="folder-open"
+              selectedColor="white"
               style={{
-                flex: 1,
-                paddingRight: 8,
-                textAlign: 'right',
+                backgroundColor: '#243855',
                 color: 'white',
-                fontWeight: '700',
+                marginRight: 8,
               }}
-              onPress={() => {
-                props.navigation.navigate('Home');
-              }}>
-              + ADD
-            </Text>
+              textStyle={{
+                color: 'white',
+              }}
+              onPress={() => props.navigation.navigate('Home')}>
+              View All
+            </Chip>
+            <Chip
+              icon="plus"
+              selectedColor="white"
+              style={{
+                backgroundColor: '#243855',
+                color: 'white',
+              }}
+              textStyle={{
+                color: 'white',
+              }}
+              onPress={() =>
+                props.navigation.navigate('RecordAddIncome', {
+                  navigateBackTo: 'Overview',
+                })
+              }>
+              Add New
+            </Chip>
           </View>
           <Content>
             <List.Section>

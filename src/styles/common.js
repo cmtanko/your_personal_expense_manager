@@ -252,7 +252,7 @@ export default StyleSheet.create({
   // Label
   label: {
     color: COLOR_GRAY,
-    paddingLeft: 8,
+    paddingLeft: 0,
   },
 
   // Drawer

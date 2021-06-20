@@ -67,6 +67,8 @@ class RecordAddIncome extends Component {
         };
       }
 
+      if (!params.record) return;
+
       const {
         id,
         amount,

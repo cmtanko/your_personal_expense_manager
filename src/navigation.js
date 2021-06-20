@@ -398,7 +398,7 @@ const HomeDrawer = ({navigation}) => {
 
 function App(props, {locked, shouldLock}) {
   const shouldAppShowLockScreen = useSelector(
-    (state) => state.setting.preference.lockscreen,
+    (state) => state.setting.preference?.lockscreen,
   );
 
   useEffect(() => {
@@ -433,7 +433,7 @@ function App(props, {locked, shouldLock}) {
 const mapStateToProps = (state) => {
   return {
     locked: state.backup.locked,
-    shouldLock: state.setting.preference.lockscreen,
+    shouldLock: state.setting.preference?.lockscreen || false,
     record: state.record,
     introShow: state.intro.show,
   };

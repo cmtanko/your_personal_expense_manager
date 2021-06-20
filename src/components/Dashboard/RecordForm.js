@@ -53,7 +53,7 @@ const RecordForm = ({
     if (!categoryId) {
       return (
         <Button transparent onPress={showModal}>
-          <Text>Select category</Text>
+          <Text style={cs.brandColorTertiary}>Select category</Text>
         </Button>
       );
     } else {
