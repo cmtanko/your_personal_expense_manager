@@ -48,6 +48,7 @@ class RecordAddIncome extends Component {
       attachment: '',
       formType: '',
       error: '',
+      showCategoryModal: false,
       selectedCategoryType: 'INCOME',
     };
 
@@ -144,8 +145,10 @@ class RecordAddIncome extends Component {
     } = this.state;
 
     amount = parseInt(amount, 10) || -1;
-    if (amount <= 0 || !categoryId || !payFrom) {
-      this.onStateChange('error', 'All fields are required!');
+    if (amount <= 0) {
+      this.onStateChange('error', 'Amount cannot be zero');
+    } else if (!categoryId) {
+      this.onStateChange('showCategoryModal', true);
     } else {
       this.props.selectDate(date);
 
@@ -227,6 +230,7 @@ class RecordAddIncome extends Component {
               payFrom={this.state.payFrom}
               payTo={this.state.payTo}
               attachment={this.state.attachment}
+              showCategoryModal={this.state.showCategoryModal}
               categories={[
                 ...categories,
                 {id: 0, title: 'Add Category', icon: 'plus', type: ''},
