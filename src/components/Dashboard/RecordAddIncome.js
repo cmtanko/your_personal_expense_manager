@@ -11,6 +11,7 @@ import {ButtonBox, ErrorBox} from '../Common';
 import {
   selectAccountLoading,
   selectCategories,
+  selectRecords,
   selectAccounts,
 } from '../../selector';
 
@@ -19,6 +20,7 @@ import {
   editRecord,
   deleteRecord,
   selectCategoryType,
+  selectDate,
 } from '../../actions';
 
 import cs from '../../styles/common';
@@ -29,13 +31,15 @@ class RecordAddIncome extends Component {
   constructor(props) {
     super(props);
 
+    let predictedDate = props.selectedItem.date || new Date();
+
     let firstAccount =
       !!props.accounts && props.accounts[0] && props.accounts[0].id;
 
     this.state = {
       id: '',
       amount: '',
-      date: new Date(),
+      date: predictedDate,
       categoryId: '',
       payFrom: firstAccount || '',
       payTo: firstAccount || '',
@@ -138,10 +142,13 @@ class RecordAddIncome extends Component {
       place,
       attachment,
     } = this.state;
+
     amount = parseInt(amount, 10) || -1;
     if (amount <= 0 || !categoryId || !payFrom) {
       this.onStateChange('error', 'All fields are required!');
     } else {
+      this.props.selectDate(date);
+
       if (id) {
         this.props.editRecord({
           id,
@@ -239,8 +246,10 @@ const mapStateToProps = (state) => {
   return {
     accounts: selectAccounts(state),
     categories: selectCategories(state),
+    records: selectRecords(state),
     selectedCategoryType: state.selectedCategoryType,
     error: state.account.error,
+    selectedItem: state.selectedItem,
     loading: selectAccountLoading(state),
   };
 };
@@ -249,5 +258,6 @@ export default connect(mapStateToProps, {
   addRecord,
   editRecord,
   deleteRecord,
+  selectDate,
   selectCategoryType,
 })(RecordAddIncome);
