@@ -53,7 +53,7 @@ const Overview = (props) => {
       let accountType = ACCOUNT_TYPE[t.category?.type];
 
       return accountType === 'TRANSFER'
-        ? t['payFrom'] === accountId || t['payTo'] === accountId
+        ? t.payFrom === accountId || t.payTo === accountId
         : t[accountType] === accountId;
     });
     return a;
@@ -238,8 +238,8 @@ const Overview = (props) => {
                   let accountType = ACCOUNT_TYPE[t.category?.type];
                   return props.selectedItem.account
                     ? accountType === 'TRANSFER'
-                      ? t['payFrom'] === props.selectedItem.account ||
-                        t['payTo'] === props.selectedItem.account
+                      ? t.payFrom === props.selectedItem.account ||
+                        t.payTo === props.selectedItem.account
                       : t[accountType] === props.selectedItem.account
                     : true;
                 })
@@ -252,7 +252,9 @@ const Overview = (props) => {
                     category,
                     description,
                   } = record;
-                  if (!category) return;
+                  if (!category) {
+                    return;
+                  }
                   return (
                     <List.Item
                       key={id}

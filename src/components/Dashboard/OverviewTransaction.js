@@ -23,14 +23,16 @@ const OverviewTransaction = (props) => {
           let accountType = ACCOUNT_TYPE[t.category?.type];
           return props.selectedItem.account
             ? accountType === 'TRANSFER'
-              ? t['payFrom'] === props.selectedItem.account ||
-                t['payTo'] === props.selectedItem.account
+              ? t.payFrom === props.selectedItem.account ||
+                t.payTo === props.selectedItem.account
               : t[accountType] === props.selectedItem.account
             : true;
         })
         .map((record) => {
           const {id, payTo, amount, payFrom, category, description} = record;
-          if (!category) return;
+          if (!category) {
+            return;
+          }
           return (
             <List.Item
               key={id}
