@@ -17,6 +17,20 @@ const WEEK_TO_DATE = {
   YEARLY: 365,
 };
 
+const MONTHS = [
+  'JAN',
+  'FEB',
+  'MAR',
+  'APR',
+  'MAY',
+  'JUN',
+  'JUL',
+  'AUG',
+  'SEP',
+  'OCT',
+  'NOV',
+  'DEC',
+];
 const ReportPage = (props) => {
   const {records, selectReportType, selectedReportType} = props;
   const incomeCatgories = props.categories.filter((obj) => {
@@ -27,20 +41,33 @@ const ReportPage = (props) => {
     return obj.type === 'EXPENSE';
   });
 
-  let yearWiseData = [
-    {x: 'Jan', y: 20},
-    {x: 'Feb', y: 3},
-    {x: 'Mar', y: 5},
-    {x: 'Apr', y: 4},
-    {x: 'May', y: 7},
-    {x: 'Jun', y: 2},
-    {x: 'Jul', y: 3},
-    {x: 'Aug', y: 5},
-    {x: 'Sep', y: 4},
-    {x: 'Oct', y: 8},
-    {x: 'Nov', y: 7},
-    {x: 'Dec', y: 7},
-  ];
+  const categoryArray = props.categories.map((cat) => {
+    return cat.id;
+  });
+
+  const recordBasedOnCategory = categoryArray.map((cat) => {
+    return {
+      [cat]: [
+        MONTHS.map((m, i) => {
+          return {
+            x: m,
+            w: props.records.filter(
+              (r) => new Date(r.date).getMonth() === i && r.categoryId === cat,
+            ),
+            y:
+              props.records
+                .filter(
+                  (r) =>
+                    new Date(r.date).getMonth() === i && r.categoryId === cat,
+                )
+                .reduce((acc, cv) => acc + cv.amount, 0) || 0,
+          };
+        }),
+      ],
+    };
+  });
+
+  console.warn(recordBasedOnCategory);
 
   const getData = (categories, allRecords) => {
     return categories
@@ -140,9 +167,10 @@ const ReportPage = (props) => {
 
       <View>
         <ReportDetail
+          categoryTypes={props.categories}
           data={getData(incomeCatgories, records)}
           expenseData={getData(expenseCategories, records)}
-          yearWiseData={yearWiseData}
+          yearWiseData={recordBasedOnCategory}
         />
       </View>
     </Container>

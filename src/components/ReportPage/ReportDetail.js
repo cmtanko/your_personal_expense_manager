@@ -1,5 +1,5 @@
+import React from 'react';
 import {connect} from 'react-redux';
-import React, {useState, useEffect} from 'react';
 import Carousel from 'react-native-carousel-view';
 import {
   VictoryPie,
@@ -8,26 +8,28 @@ import {
   VictoryLegend,
 } from 'victory-native';
 import {Text, View, Dimensions, Platform} from 'react-native';
-import {Content} from 'native-base';
-import {} from 'react-native';
+
 import styles from './styles';
 import cs from '../../styles/common';
+import CategoryBasedReport from './CategoryBasedReport';
 
-const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
+const deviceHeight = Dimensions.get('window').height;
 
 const ReportDetail = (props) => {
-  const [data, setData] = useState([]);
+  let {expenseData, yearWiseData, data} = props;
 
-  useEffect(() => {
-    setData(props.data);
-  }, [props.data]);
-
-  let myData = props.data;
-  let expenseData = props.expenseData;
+  let categoryTypes = props.categoryTypes.map((cat) => {
+    return {
+      key: cat.id,
+      value: cat.id,
+      label: cat.title,
+    };
+  });
   const colorScale = ['tomato', 'orange', 'gold', 'cyan', 'navy'];
+
   return (
-    myData.length > 0 && (
+    data.length > 0 && (
       <View>
         <Carousel
           height={deviceHeight}
@@ -47,7 +49,7 @@ const ReportDetail = (props) => {
               labelRadius={0}
               width={300}
               height={300}
-              data={myData}
+              data={data}
               events={[]}
               style={{
                 labels: styles.labels,
@@ -67,7 +69,7 @@ const ReportDetail = (props) => {
                 labels: {fill: 'white', fontSize: 10},
               }}
               colorScale={colorScale}
-              data={myData}
+              data={data}
             />
           </View>
           <View pointerEvents="none" style={styles.slides}>
@@ -112,7 +114,7 @@ const ReportDetail = (props) => {
               theme={VictoryTheme.material}
               colorScale={colorScale}
               width={deviceWidth}
-              data={[...expenseData, ...myData]}
+              data={[...expenseData, ...data]}
               events={[]}
               style={{
                 labels: styles.labels,
@@ -120,6 +122,13 @@ const ReportDetail = (props) => {
               animate={{
                 duration: 1000,
               }}
+            />
+          </View>
+
+          <View pointerEvents="auto" style={styles.slides}>
+            <CategoryBasedReport
+              categoryTypes={categoryTypes}
+              data={yearWiseData}
             />
           </View>
         </Carousel>
