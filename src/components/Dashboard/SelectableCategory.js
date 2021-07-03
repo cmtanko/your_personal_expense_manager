@@ -36,6 +36,7 @@ const SelectableCategory = (props) => {
             return (
               <RoundIcon
                 selectedItem={selectedItem?.category}
+                key={id}
                 id={id}
                 title={title}
                 name={icon}

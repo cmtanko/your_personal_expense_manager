@@ -7,7 +7,12 @@ import {Container, View, Button, Segment, Text} from 'native-base';
 
 import cs from '../../styles/common';
 import {selectReportType} from '../../actions';
-import {selectRecords, selectCategories, selectAccounts} from '../../selector';
+import {
+  selectRecords,
+  selectCategories,
+  selectAccounts,
+  selectRecordGroupedByCategoryAndYear,
+} from '../../selector';
 
 import ReportDetail from './ReportDetail';
 
@@ -17,22 +22,13 @@ const WEEK_TO_DATE = {
   YEARLY: 365,
 };
 
-const MONTHS = [
-  'JAN',
-  'FEB',
-  'MAR',
-  'APR',
-  'MAY',
-  'JUN',
-  'JUL',
-  'AUG',
-  'SEP',
-  'OCT',
-  'NOV',
-  'DEC',
-];
 const ReportPage = (props) => {
-  const {records, selectReportType, selectedReportType} = props;
+  const {
+    records,
+    selectReportType,
+    selectedReportType,
+    recordGroupedByCategoryAndYear,
+  } = props;
   const incomeCatgories = props.categories.filter((obj) => {
     return obj.type === 'INCOME';
   });
@@ -40,34 +36,6 @@ const ReportPage = (props) => {
   const expenseCategories = props.categories.filter((obj) => {
     return obj.type === 'EXPENSE';
   });
-
-  const categoryArray = props.categories.map((cat) => {
-    return cat.id;
-  });
-
-  const recordBasedOnCategory = categoryArray.map((cat) => {
-    return {
-      [cat]: [
-        MONTHS.map((m, i) => {
-          return {
-            x: m,
-            w: props.records.filter(
-              (r) => new Date(r.date).getMonth() === i && r.categoryId === cat,
-            ),
-            y:
-              props.records
-                .filter(
-                  (r) =>
-                    new Date(r.date).getMonth() === i && r.categoryId === cat,
-                )
-                .reduce((acc, cv) => acc + cv.amount, 0) || 0,
-          };
-        }),
-      ],
-    };
-  });
-
-  console.warn(recordBasedOnCategory);
 
   const getData = (categories, allRecords) => {
     return categories
@@ -170,7 +138,7 @@ const ReportPage = (props) => {
           categoryTypes={props.categories}
           data={getData(incomeCatgories, records)}
           expenseData={getData(expenseCategories, records)}
-          yearWiseData={recordBasedOnCategory}
+          yearWiseData={recordGroupedByCategoryAndYear}
         />
       </View>
     </Container>
@@ -184,6 +152,7 @@ const mapStateToProps = (state) => {
     records: selectRecords(state),
     accounts: selectAccounts(state),
     categories: selectCategories(state),
+    recordGroupedByCategoryAndYear: selectRecordGroupedByCategoryAndYear(state),
     selectedReportType,
   };
 };

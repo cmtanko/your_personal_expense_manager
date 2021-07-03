@@ -8,6 +8,21 @@ const userList = (state) => state.user;
 const backupList = (state) => state.backup;
 const setting = (state) => state.setting;
 
+const MONTHS = [
+  'JAN',
+  'FEB',
+  'MAR',
+  'APR',
+  'MAY',
+  'JUN',
+  'JUL',
+  'AUG',
+  'SEP',
+  'OCT',
+  'NOV',
+  'DEC',
+];
+
 export const selectSetting = createSelector(
   [setting],
   (set) => set && set.preference,
@@ -31,6 +46,43 @@ export const selectRecords = createSelector(
 export const selectCategories = createSelector(
   [categoryList],
   (category) => category && category.list,
+);
+
+export const selectRecordGroupedByCategoryAndYear = createSelector(
+  [categoryList, recordList],
+  (category, records) => {
+    const recordByCategoryArray = category.list.map((cat) => {
+      return {
+        [cat.id]: [
+          MONTHS.map((m, i) => {
+            return {
+              key: cat.id,
+              x: m,
+              w: records.list.filter(
+                (r) =>
+                  new Date(r.date).getMonth() === i && r.categoryId === cat.id,
+              ),
+              y:
+                records.list
+                  .filter(
+                    (r) =>
+                      new Date(r.date).getMonth() === i &&
+                      r.categoryId === cat.id,
+                  )
+                  .reduce((acc, cv) => acc + cv.amount, 0) || 0,
+            };
+          }),
+        ],
+      };
+    });
+
+    let recordByCategoryObject = recordByCategoryArray.reduce((obj, item) => {
+      obj[Object.keys(item)[0]] = Object.values(item)[0][0];
+      return obj;
+    }, {});
+
+    return recordByCategoryObject;
+  },
 );
 
 export const selectTransactions = createSelector(

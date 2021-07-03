@@ -10,12 +10,9 @@ import cs, {COLOR_TERTIARY} from '../../styles/common';
 const CategoryBasedReport = (props) => {
   const {data, selectedItem} = props;
   let [categoryItem, setCategoryItem] = useState([]);
-
   useEffect(() => {
     if (selectedItem.category > 0) {
-      setCategoryItem(
-        data[selectedItem.category - 1][selectedItem.category][0],
-      );
+      setCategoryItem(data[selectedItem.category] || []);
     } else {
       setCategoryItem([]);
     }
@@ -29,6 +26,9 @@ const CategoryBasedReport = (props) => {
       {categoryItem && (
         <VictoryChart theme={VictoryTheme.material}>
           <VictoryLine
+            animate={{
+              duration: 500,
+            }}
             style={{
               data: {stroke: COLOR_TERTIARY},
             }}
