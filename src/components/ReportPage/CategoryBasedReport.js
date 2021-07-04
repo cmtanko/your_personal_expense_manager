@@ -1,42 +1,53 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
 import {connect} from 'react-redux';
-import {VictoryChart, VictoryLine, VictoryTheme} from 'victory-native';
+import React, {useState, useEffect} from 'react';
+import {VictoryLine, VictoryChart, VictoryScatter} from 'victory-native';
 
+import {HeaderText} from '../Common';
+import {chartTheme} from './ChartTheme';
 import SelectableCategory from '../Dashboard/SelectableCategory';
+import {selectRecordGroupedByCategoryAndYear} from '../../selector';
 
-import cs, {COLOR_TERTIARY} from '../../styles/common';
+import styles from './styles';
+import cs from '../../styles/common';
 
 const CategoryBasedReport = (props) => {
-  const {data, selectedItem} = props;
+  const {recordGroupedByCategoryAndYear, selectedItem} = props;
   let [categoryItem, setCategoryItem] = useState([]);
+
   useEffect(() => {
     if (selectedItem.category > 0) {
-      setCategoryItem(data[selectedItem.category] || []);
-    } else {
-      setCategoryItem([]);
+      setCategoryItem(
+        recordGroupedByCategoryAndYear[selectedItem.category] || [],
+      );
     }
-  }, [data, selectedItem.category, categoryItem]);
+  }, [recordGroupedByCategoryAndYear, selectedItem.category, categoryItem]);
 
   return (
-    <View style={{alignItems: 'center'}}>
-      <Text style={[cs.h2, cs.color_light_blue, cs.padding_large]}>
-        Report by Category
-      </Text>
+    <View style={cs.center_item}>
+      <HeaderText title={'Report by Category'} />
       {categoryItem && (
-        <VictoryChart theme={VictoryTheme.material}>
+        <VictoryChart theme={chartTheme}>
+          <VictoryScatter
+            animate={styles.animate500}
+            data={categoryItem.map((val) => {
+              return {
+                x: val.x,
+                y: val.y > 0 ? val.y : null,
+                label: val.y > 0 ? val.y.toString() : '',
+              };
+            })}
+            style={styles.scatterChart}
+          />
+
           <VictoryLine
-            animate={{
-              duration: 500,
-            }}
-            style={{
-              data: {stroke: COLOR_TERTIARY},
-            }}
+            animate={styles.animate100}
+            style={styles.lineChart}
             data={categoryItem}
           />
         </VictoryChart>
       )}
-      <SelectableCategory title={'Select Category'} style={{paddingTop: 0}} />
+      <SelectableCategory title={'Select Category'} style={cs.p_t_0} />
     </View>
   );
 };
@@ -44,6 +55,7 @@ const CategoryBasedReport = (props) => {
 const mapStateToProps = (state) => {
   return {
     selectedItem: state.selectedItem,
+    recordGroupedByCategoryAndYear: selectRecordGroupedByCategoryAndYear(state),
   };
 };
 

@@ -1,70 +1,15 @@
 /* eslint-disable react-native/no-inline-styles */
-import _ from 'lodash';
 import React from 'react';
-import moment from 'moment';
 import {connect} from 'react-redux';
 import {Container, View, Button, Segment, Text} from 'native-base';
 
 import cs from '../../styles/common';
 import {selectReportType} from '../../actions';
-import {
-  selectRecords,
-  selectCategories,
-  selectAccounts,
-  selectRecordGroupedByCategoryAndYear,
-} from '../../selector';
 
 import ReportDetail from './ReportDetail';
 
-const WEEK_TO_DATE = {
-  WEEKLY: 7,
-  MONTHLY: 30,
-  YEARLY: 365,
-};
-
 const ReportPage = (props) => {
-  const {
-    records,
-    selectReportType,
-    selectedReportType,
-    recordGroupedByCategoryAndYear,
-  } = props;
-  const incomeCatgories = props.categories.filter((obj) => {
-    return obj.type === 'INCOME';
-  });
-
-  const expenseCategories = props.categories.filter((obj) => {
-    return obj.type === 'EXPENSE';
-  });
-
-  const getData = (categories, allRecords) => {
-    return categories
-      .map((category) => {
-        let recordByCategory = allRecords.filter((record) => {
-          const todayDate = moment();
-          const recordDate = moment(record.date);
-          const dateDiff = todayDate.diff(recordDate, 'days');
-
-          return (
-            record.categoryId === category.id &&
-            dateDiff < WEEK_TO_DATE[selectedReportType]
-          );
-        });
-
-        let sumOfIncome = 0;
-
-        _.each(recordByCategory, (record) => {
-          sumOfIncome += parseFloat(record.amount);
-        });
-
-        return {
-          name: sumOfIncome > 0 ? category.title + ' $' + sumOfIncome : ' ',
-          label: category.title,
-          y: sumOfIncome > 0 ? parseInt(sumOfIncome, 10) : 0,
-        };
-      })
-      .filter((cat) => cat.y > 0);
-  };
+  const {selectReportType, selectedReportType} = props;
 
   return (
     <Container style={cs.bg_dark_lightblue}>
@@ -134,12 +79,7 @@ const ReportPage = (props) => {
       </Segment>
 
       <View>
-        <ReportDetail
-          categoryTypes={props.categories}
-          data={getData(incomeCatgories, records)}
-          expenseData={getData(expenseCategories, records)}
-          yearWiseData={recordGroupedByCategoryAndYear}
-        />
+        <ReportDetail />
       </View>
     </Container>
   );
@@ -149,10 +89,6 @@ const mapStateToProps = (state) => {
   const {selectedReportType} = state;
 
   return {
-    records: selectRecords(state),
-    accounts: selectAccounts(state),
-    categories: selectCategories(state),
-    recordGroupedByCategoryAndYear: selectRecordGroupedByCategoryAndYear(state),
     selectedReportType,
   };
 };
