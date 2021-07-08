@@ -141,6 +141,7 @@ const Overview = (props) => {
               return (
                 <RoundBoxButton
                   id={id}
+                  key={id}
                   selectedItem={props?.selectedItem?.account}
                   title={title}
                   subtitle={'$ ' + totalBalance}
