@@ -124,6 +124,7 @@ const Overview = (props) => {
             horizontal={true}
             style={{}}>
             <RoundBoxButton
+              testID="addaccount"
               title="Add Account"
               subtitle="+"
               id={0}
