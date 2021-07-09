@@ -38,7 +38,6 @@ const DatePickerBox = ({testID, title, value, onChange}) => {
               alignItems: 'flex-start',
             },
             dateText: {
-              color: '#22e3c4',
               fontSize: 16,
               paddingLeft: 16,
             },
