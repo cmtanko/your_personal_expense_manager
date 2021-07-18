@@ -18,7 +18,6 @@ It helps you track all your incomes and total savings as well. Your data is stor
 
 ## Screenshots
 
-<img src="screenshots/screenshot.png">
 <img src="screenshots/overview.JPG">
 
 ## Environment Versions
