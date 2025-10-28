@@ -1,5 +1,5 @@
 {
-  "name": "react_native_starter_kit",
+  "name": "personal-expense-manager",
   "version": "1.1.1",
   "private": true,
   "scripts": {
@@ -10,11 +10,13 @@
     "build-ios": "node node_modules/react-native/local-cli/cli.js run-ios --configuration Release",
     "install-deps": "npm run install-deps-android && npm run install-deps-ios",
     "android": "react-native run-android",
+    "start-android": "react-native run-android",
     "alpha-release": "cd android && bundle exec fastlane alpha",
     "alpha-release-ios": "cd ios && bundle exec fastlane alpha",
     "build-android": "cd android && ./gradlew assembleRelease",
     "clean-android": "cd android && ./gradlew clean",
     "ios": "react-native run-ios",
+    "start-ios": "react-native run-ios",
     "ios-device": "react-native run-ios --device 'my iPhone'",
     "start": "react-native start",
     "jest": "jest",

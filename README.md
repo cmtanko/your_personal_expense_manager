@@ -63,10 +63,10 @@ For development:
 npm run start
 
 # Terminal 2: Run on iOS
-npm run start-ios
+npm run ios
 
 # Or run on Android
-npm run start-android
+npm run android
 ```
 
 ### Building for Production
@@ -115,8 +115,8 @@ npm run alpha-release
 
 ```bash
 npm run start              # Start Metro bundler
-npm run start-ios          # Run on iOS simulator
-npm run start-android      # Run on Android emulator
+npm run ios                # Run on iOS simulator
+npm run android            # Run on Android emulator
 ```
 
 ### Building
