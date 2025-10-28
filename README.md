@@ -1,236 +1,257 @@
-[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/cmtanko)
+[![Buy Me A Coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/cmtanko)
 
 # Your Personal Expense Manager
 
-Your Personal Expense Manager helps manage your financial records quickly and effectively. It includes analytic charts to better understand your spending habits.
+A React Native expense tracking app that helps you manage your financial records quickly and effectively. Track your incomes and expenses, view analytics, and keep all your data secure.
 
-It helps you track all your incomes and total savings as well. Your data is stored in your local phone and can be synced to your own google drive. Use this tool to keep track of all your day-to-day expenses.
+## App Store Links
 
-## APP Link
-- [App Store] (https://apps.apple.com/au/app/your-personal-expense-manager/id1569814201)
-- [Play Store] (https://play.google.com/store/apps/details?id=io.newplanet.reactnativestarterkit)
+- [App Store](https://apps.apple.com/au/app/your-personal-expense-manager/id1569814201)
+- [Play Store](https://play.google.com/store/apps/details?id=io.newplanet.reactnativestarterkit)
 
-## Features:
-- [x] Quickly add your incomes/expenses.
-- [x] Filter by Account, Category, expense type, and dates.
-- [x] Secure and password protected
-- [x] Back up to your google drive.
-- [x] Easy to search for items.
-- [x] Charts to easily view your incomes and expenses
-- [x] Everything works offline.
-- [ ] Add a budget to each category
-- [ ] Add recurring transaction option
+## Features
+
+- ✅ Quickly add incomes and expenses
+- ✅ Filter by account, category, expense type, and dates
+- ✅ Password protected with secure local storage
+- ✅ Backup to Google Drive
+- ✅ Search functionality
+- ✅ Analytics charts for income and expense tracking
+- ✅ Fully offline capable
+- 🚧 Budget planning per category (coming soon)
+- 🚧 Recurring transactions (coming soon)
 
 
 ## Screenshots
 
-<img src="screenshots/overview.JPG">
+![App Overview](screenshots/overview.JPG)
 
-## Environment Versions
-- Node: 10.15.3
-- React Native : 0.63.3
-- Cocopod: 1.10.1
+## Prerequisites
 
-## Installation
+- Node.js (v14 or higher recommended)
+- React Native 0.63.3
+- iOS: Xcode 12+ with CocoaPods
+- Android: Android Studio with Android SDK
+- Ruby 2.7+ and Fastlane for deployment
 
-### Ruby & Fastlane
+## Getting Started
 
-#### Install rvm
-Install rvm and select Ruby version
+### Installation
 
-``` bash
-# Install RVM
-curl -sSL https://get.rvm.io | bash -s stable --ruby
- 
-# Install the version used by Fastlane
-rvm install ruby-$(cat .ruby-version)
-
-```
-
-#### Install Fastlane
-So that we can build like cool humans, we use [Fastlane](https://fastlane.tools/)
-
+1. Clone the repository:
 ```bash
-gem install fastlane -NV
-```
- 
-### Node
-
-Node versions are managed via nvm. 
-
-#### nvm
-To install
-
-```
-# Install NVM
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
-
-# Install Required Node version
-nvm install
-
-# Select node version
-nvm use
+git clone <repository-url>
+cd Your_Personal_Expense_Manager
 ```
 
-### React Native
-
+2. Install dependencies:
 ```bash
-brew install watchman
-npm install -g react-native-cli
+npm install
 ```
 
-
-#### Platform specific dependencies
-```
+3. Install platform-specific dependencies:
+```bash
 npm run install-deps
 ```
 
-#### Android tools
+### Running the App
 
-- Android Studio 3.2
-- Android SDK 8.1(oreo)
-- Androik SDK Build Tools 29
-- Android Sdk platform-tools 28.0.0
-- Android sdk tools 26.1.1
-- Android support repository 47.0.0
-- Google repository 58 
-
-#### Xcode
-
-12.X
-
-## Build 
+For development:
 
 ```bash
-# In terminal 1
+# Terminal 1: Start Metro bundler
 npm run start
 
-# In terminal 2
-npm run start-ios #switch npm run start-android
-```
-
-## Targeting specific platforms
-
-You can build out for a particular platform via the appropriate npm command
-```bash
-npm run build-ios
-npm run build-android
-```
-
-### iOS
-```
-  Rename .env.example to .env , and fill with appropriate keys
-```
-### Android
-Make sure your .keystore file is named react-native-starter-kit.keystore and inside ./android/secure folder
-```
-export MY_RELEASE_STORE_FILE=YOUR_PATH
-export My_RELEASE_STORE_PASSWORD=YOUR_STORE_PASSWORD
-export My_RELEASE_KEY_ALIAS=YOUR_STORE_KEY_ALIAS
-export My_RELEASE_KEY_PASSWORD=YOUR_KEY_PASSWORD
-export ANDROID_HOME=YOUR_PATH_TO_Library/Android/sdk
-export ANDROID_NDK=YOUR_PATH_TO_Library/Android/sdk/ndk/21.3.6528147
-```
-
-# Deployment
-
-## Generating artefacts
-
-
-
-## Scripts
-
-```
-npm run script_name
-```
-
-the available scripts are
-
-```bash
-# start the metro interface
-npm run start
-
+# Terminal 2: Run on iOS
 npm run start-ios
+
+# Or run on Android
 npm run start-android
+```
 
-npm run build-ios
-npm run build-android
-
-npm run alpha-release
-
-npm run reinstall
-
-``` 
-
-# Running Test 
-
-Test is implemented through detox and jest
+### Building for Production
 
 ```bash
-# In terminal 1
-npm run test
+# Build for iOS
+npm run build-ios
 
-# In terminal 2
-npm run test-v
+# Build for Android
+npm run build-android
 ```
 
-# Common setup issues
+### iOS Configuration
 
-## iOS 
-
-You may receive errors about Podfile not matching Podfile.lock being out of date
-or Gemfile being out of date Gemfile.lock
-
+1. Configure environment variables (create `.env` file if needed)
+2. Run pod install:
+```bash
+cd ios && pod install && cd ..
 ```
-cd ios  
+
+### Android Configuration
+
+For Android release builds, set up your signing credentials:
+
+```bash
+export MY_RELEASE_STORE_FILE=path/to/your.keystore
+export MY_RELEASE_STORE_PASSWORD=your_store_password
+export MY_RELEASE_KEY_ALIAS=your_key_alias
+export MY_RELEASE_KEY_PASSWORD=your_key_password
+export ANDROID_HOME=$HOME/Library/Android/sdk
+```
+
+Deploy releases using Fastlane:
+
+```bash
+# iOS alpha release
+npm run alpha-release-ios
+
+# Android alpha release
+npm run alpha-release
+```
+
+## Available Scripts
+
+### Development
+
+```bash
+npm run start              # Start Metro bundler
+npm run start-ios          # Run on iOS simulator
+npm run start-android      # Run on Android emulator
+```
+
+### Building
+
+```bash
+npm run build-ios          # Build iOS app
+npm run build-android      # Build Android app
+npm run bundle:ios         # Bundle iOS JavaScript
+```
+
+### Testing
+
+```bash
+npm run test               # Run E2E tests with Detox
+npm run test-v             # Run tests with verbose output
+npm run jest               # Run Jest unit tests
+```
+
+### Maintenance
+
+```bash
+npm run clean-android      # Clean Android build cache
+npm run clear-cache        # Clear all caches (Metro, Android, iOS)
+npm run reinstall          # Clean reinstall of all dependencies
+```
+
+### Code Quality
+
+```bash
+npm run lint                # Run ESLint
+npm run lint:fix            # Fix linting issues
+npm run prettier            # Format code with Prettier
+npm run format-code         # Format and fix code
+```
+
+## Troubleshooting
+
+### iOS Setup Issues
+
+**Podfile out of sync:**
+
+```bash
+cd ios
 pod update
 pod install
-gem update
+cd ..
 ```
 
-# Trouble shooting in the development Process
+### Metro Bundler Issues
 
-## Remove dead metro thread
+**Port already in use:**
 
-If you get an error like "something is already running"
-follow these steps
+```bash
+# Find the process
+sudo lsof -i :8081
 
-- get PID `sudo lsof -i :8081`
-- remember the PID
-- kill it `kill pid_number` ex: `kill 4532`
+# Kill the process (replace PID with actual number)
+kill -9 <PID>
+```
 
-## Fastlane doesnt not reconize node
+**Clear all Metro caches:**
 
-`ln -s $(which node) /usr/local/bin/node`
+```bash
+npm run clear-cache
+```
 
+### iOS Simulator Crashing
 
-### White screen
+If the simulator crashes without errors:
 
-disable CORS `open -a Google\ Chrome --args --disable-web-security --user-data-dir`
-
-if http://some_stuff/debugger-ui/ Change to http://localhost:8081/debugger-ui/
-
-### 
-
-### The simulator IOS is crashing without any error message
-
+```bash
+# Clean iOS build
 rm -rf ./ios/build
-watchman watch-del-al
+
+# Clean watchman cache
+watchman watch-del-all
+
+# Clean React Native cache
 rm -rf $TMPDIR/react-*
+
+# Kill Metro
 lsof -ti :8081 | xargs kill -9
-cd ios/ && pod install
+
+# Reinstall pods
+cd ios && pod install && cd ..
+
+# Rebuild
 react-native run-ios
+```
 
+### Fastlane Node Issues
 
-This command should create a symlink to `/uer`
-`ln -s $(which node) /usr/local/bin/node`
+If Fastlane doesn't recognize Node:
 
-### Implementing Google signin 
-https://www.pradipdebnath.com/2020/10/06/how-to-implement-google-login-in-react-native-with-firebase/
+```bash
+ln -s $(which node) /usr/local/bin/node
+```
 
-### Update in react-native-carousel-view > carouselPager.android.js
-`import {ViewPagerAndroid} from 'react-native';` to
-`import ViewPagerAndroid from '@react-native-community/viewpager';`
+### Build and Reinstall Everything
+
+Nuclear option - clean everything and reinstall:
+
+```bash
+npm run reinstall
+```
+
+## Tech Stack
+
+- **React Native** - Cross-platform mobile development
+- **Redux** - State management
+- **React Navigation** - Navigation
+- **Native Base** - UI components
+- **Detox** - E2E testing framework
+- **Jest** - Unit testing
+- **Fastlane** - CI/CD automation
+- **SQLite** - Local data storage
+- **Google Drive API** - Cloud backup
+
+## Project Structure
+
+```
+src/
+├── actions/          # Redux action creators
+├── reducers/         # Redux reducers
+├── components/       # React components
+├── services/         # API and data services
+├── utils/            # Helper functions
+├── helpers/          # Database helpers
+├── theme/            # Styling and theme configuration
+└── navigation.js     # Navigation configuration
+```
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
 
 ### Update in react-native-timeline-flatlist
